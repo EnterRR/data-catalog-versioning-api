@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: Data Catalog Versioning API
+  version: '1.0'
+  description: This API is used to communicate with the versioning service of the Data Catalog application.
+  contact:
+    name: Szilárd Tumó
+    email: szilardtumo@stud.ubbcluj.ro
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/assets/{assetId}/versions':
+    parameters:
+      - schema:
+          type: string
+        name: assetId
+        in: path
+        required: true
+        description: The unique identifier of the asset.
+    get:
+      summary: List the versions of an asset
+      tags:
+        - Version
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./definitions/VersionResponse.yaml
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ./definitions/ErrorResponse.yaml
+      operationId: getAssetVersions
+      description: |-
+        Lists all the available versions of the asset.
+
+        Responds with `404` if the asset is not found.
+    post:
+      summary: ''
+      operationId: createAssetVersion
+      responses:
+        '201':
+          description: Created
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: ./definitions/ErrorResponse.yaml
+      description: |-
+        Creates a new version of the asset, with the current content of the asset.
+
+        Responds with `404` if the asset is not found, and with `422` if the request body is invalid.
+      security:
+        - JWT: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ./definitions/VersionRequest.yaml
+      tags:
+        - Version
+  '/assets/{assetId}/versions/{versionId}':
+    parameters:
+      - schema:
+          type: string
+        name: assetId
+        in: path
+        required: true
+        description: The unique identifier of the asset.
+      - schema:
+          type: string
+        name: versionId
+        in: path
+        required: true
+        description: The unique identifier of the version.
+    get:
+      summary: A version of an asset
+      tags:
+        - Version
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./definitions/VersionResponse.yaml
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ./definitions/ErrorResponse.yaml
+      operationId: getAssetVersion
+      description: |-
+        Returns the required version of the asset.
+
+        Responds with `404` if the asset or the version is not found. Details about the failure in the `message` field of the response object.
+      parameters: []
+    delete:
+      summary: ''
+      operationId: deleteAssetVersion
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ./definitions/ErrorResponse.yaml
+      description: |-
+        Deletes the sepcified version of the asset.
+
+        Responds with `404` if the asset or the version is not found. Details about the failure in the `message` field of the error response.
+      security:
+        - JWT: []
+      tags:
+        - Version
+components:
+  schemas: {}
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      description: Authentication is made by the JWT token sent in the Authorization header of the request.
+tags:
+  - name: Version
+security: []

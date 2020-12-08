@@ -1,0 +1,10 @@
+title: VersionRequest
+type: object
+description: Used when sending a request to create a new version.
+properties:
+  name:
+    type: string
+    description: The name (or tag) of the version.
+    example: 1.0.0
+required:
+  - name

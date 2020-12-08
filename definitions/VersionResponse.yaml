@@ -1,0 +1,44 @@
+title: VersionResponse
+type: object
+description: |-
+  Describes a specific version of an Asset.
+
+  A version is immutable.
+properties:
+  id:
+    type: string
+    description: Unique identifier of the version.
+  name:
+    type: string
+    description: The name (or tag) of the version.
+    example: 1.0.0
+  assetId:
+    type: string
+    description: The unique identifier of the asset having this version.
+  contents:
+    type: array
+    description: The list of contents which are present in this version.
+    items:
+      $ref: ./ContentResponse.yaml
+  createdAt:
+    type: string
+    description: The datetime when this version was created.
+    format: date-time
+required:
+  - id
+  - name
+  - assetId
+  - contents
+  - createdAt
+x-examples:
+  example-1:
+    id: string
+    name: 1.0.0
+    assetId: string
+    contents:
+      - id: string
+        name: users.csv
+        lastModified: '2020-12-02T12:51:33.000Z'
+        contentMD5: abkzjtTvLwLpCpBlQcMYLw==
+        size: 176
+    createdAt: '2019-08-24T14:15:22Z'

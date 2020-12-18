@@ -68,7 +68,7 @@ paths:
               $ref: ./definitions/VersionRequest.yaml
       tags:
         - Version
-  '/assets/{assetId}/versions/{versionId}':
+  '/assets/{assetId}/versions/{name}':
     parameters:
       - schema:
           type: string
@@ -78,10 +78,10 @@ paths:
         description: The unique identifier of the asset.
       - schema:
           type: string
-        name: versionId
+        name: name
         in: path
         required: true
-        description: The unique identifier of the version.
+        description: The name of an asset version.
     get:
       summary: A version of an asset
       tags:

@@ -9,9 +9,6 @@ x-examples:
     contentMD5: abkzjtTvLwLpCpBlQcMYLw==
     size: 176
 properties:
-  id:
-    type: string
-    description: The unique identifier of the content.
   name:
     type: string
     description: The name of the blob in the container.
@@ -26,7 +23,7 @@ properties:
     description: The size of the blob in bytes.
     example: 176
     minimum: 0
+    format: int64
 required:
-  - id
   - name
   - lastModified

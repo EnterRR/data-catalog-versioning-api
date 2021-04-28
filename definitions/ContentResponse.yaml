@@ -1,27 +1,23 @@
 title: ContentResponse
 type: object
-description: Describes the properties of a file in an Azure Blob Container at a specific time.
+description: ''
 x-examples:
-  example-1:
-    id: string
+  Content Response Example:
     name: users.csv
     lastModified: '2020-12-02T12:51:33.000Z'
-    contentMD5: abkzjtTvLwLpCpBlQcMYLw==
     size: 176
 properties:
   name:
     type: string
     description: The name of the blob in the container.
-    example: users.csv
   lastModified:
     type: string
     format: date-time
     description: The date when the blob was last modified.
-    example: '2020-12-02T12:51:33.000Z'
   size:
     type: integer
     description: The size of the blob in bytes.
-    example: 176
+    example: 0
     minimum: 0
     format: int64
 required:

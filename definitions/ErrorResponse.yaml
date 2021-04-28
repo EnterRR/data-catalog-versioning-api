@@ -1,24 +1,22 @@
 title: ErrorResponse
 type: object
-description: 'Response model sent by the server when an error occured. '
+description: ''
 properties:
   timestamp:
     type: string
     format: date-time
-    description: The time of the error response being sent.
+    description: The time of the error.
   status:
     type: integer
     description: The status code of the response.
-    example: 400
-    minimum: 100
-    maximum: 599
+    example: 200
   error:
     type: string
     description: The status description of the response.
     example: Bad Request
   message:
     type: object
-    description: A description of the error.
+    description: 'An object containing the erros, with the field name as key, and the error cause as value.'
   path:
     type: string
     example: /assets

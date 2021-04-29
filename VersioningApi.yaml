@@ -157,5 +157,6 @@ components:
       description: Authentication is made by the JWT token sent in the Authorization header of the request.
 tags:
   - name: Version
+  - x-displayName: Version Management
 security:
   - JWT: []

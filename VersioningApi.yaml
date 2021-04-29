@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Data Catalog Versioning API
+  title: Data Catalog Versioning Service API
   version: '1.0'
   description: |-
     The asset versioning service of the Data Catalog application.
@@ -51,7 +51,7 @@ paths:
         - `404`: The asset was not found.
         - `200`: The version was returned in the HTTP body.
     post:
-      summary: ''
+      summary: Create an asset version
       operationId: createAssetVersion
       responses:
         '201':
@@ -95,7 +95,7 @@ paths:
         required: true
         description: The name of the asset version.
     get:
-      summary: A version of an asset
+      summary: Get a version of an asset
       tags:
         - Version
       responses:
@@ -122,7 +122,7 @@ paths:
         - `200`: The version was returned in the HTTP body.
       parameters: []
     delete:
-      summary: ''
+      summary: Delete an asset version
       operationId: deleteAssetVersion
       responses:
         '204':

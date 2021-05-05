@@ -137,8 +137,6 @@ paths:
         Deletes the sepcified version of the asset.
 
         Responds with `404` if the asset or the version is not found. Details about the failure in the `message` field of the error response.
-      security:
-        - JWT: []
       tags:
         - Version
 components:
@@ -155,8 +153,14 @@ components:
       scheme: bearer
       bearerFormat: Bearer <token>
       description: Authentication is made by the JWT token sent in the Authorization header of the request.
+    API Key:
+      name: Authorization
+      type: apiKey
+      in: header
+      description: 'Authentication is made by the API key sent in the Authorization header of the request, in the following format: `Bearer <api_key>`.'
 tags:
   - name: Version
     x-displayName: Version Management
 security:
   - JWT: []
+  - API Key: []

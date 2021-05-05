@@ -153,7 +153,7 @@ components:
       scheme: bearer
       bearerFormat: Bearer <token>
       description: Authentication is made by the JWT token sent in the Authorization header of the request.
-    API Key:
+    ApiKey:
       name: Authorization
       type: apiKey
       in: header
@@ -163,4 +163,4 @@ tags:
     x-displayName: Version Management
 security:
   - JWT: []
-  - API Key: []
+  - ApiKey: []

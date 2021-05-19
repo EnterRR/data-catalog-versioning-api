@@ -66,6 +66,7 @@ paths:
                 $ref: ./definitions/ErrorResponse.yaml
       description: |-
         Creates a new version of the asset, with the current content of the asset.
+        The version name must be unique for the asset.
 
         Requires access rights to the asset itself, to be able to create a new version.
 

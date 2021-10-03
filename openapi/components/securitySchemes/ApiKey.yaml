@@ -1,0 +1,6 @@
+name: Authorization
+type: apiKey
+in: header
+description: >-
+  Authentication is made by the API key sent in the Authorization header of the
+  request, in the following format: `Bearer <api_key>`.

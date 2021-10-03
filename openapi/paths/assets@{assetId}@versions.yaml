@@ -1,0 +1,79 @@
+parameters:
+  - schema:
+      type: string
+    name: assetId
+    in: path
+    required: true
+    description: The ID of the asset.
+get:
+  summary: List the versions of an asset
+  tags:
+    - Version
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ./definitions/VersionResponse.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ./definitions/ErrorResponse.yaml
+  operationId: getAssetVersions
+  description: >-
+    Lists all the available versions of the asset.
+
+
+    Requires access rights to the asset itself, to be able to retrieve the
+    version.
+
+
+    Possible response codes:
+
+    - `404`: The asset was not found.
+
+    - `200`: The version was returned in the HTTP body.
+post:
+  summary: Create an asset version
+  operationId: createAssetVersion
+  responses:
+    '201':
+      description: Created
+    '404':
+      description: Not Found
+    '422':
+      description: Unprocessable Entity (WebDAV)
+      content:
+        application/json:
+          schema:
+            $ref: ./definitions/ErrorResponse.yaml
+  description: >-
+    Creates a new version of the asset, with the current content of the asset.
+
+    The version name must be unique for the asset.
+
+
+    Requires access rights to the asset itself, to be able to create a new
+    version.
+
+
+    Possible response codes:
+
+    - `404`: The asset was not found.
+
+    - `422`: The HTTP request body is invalid. Detailed explanation can be found
+    in the response body.
+
+    - `201`: The version was created successfully.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ./definitions/VersionRequest.yaml
+  tags:
+    - Version

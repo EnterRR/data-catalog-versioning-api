@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Data Catalog Versioning Service API
+  version: '1.0'
+  description: >-
+    The asset versioning service of the Data Catalog application.
+
+
+    Provides API endpoints to create, delete and retrieve asset versions. The
+    access rights to an asset's version are the same as the right to the asset
+    itself.
+
+
+    The versions cannot be modified, only deleted.
+  contact:
+    name: Szilárd Tumó
+    email: szilardtumo@stud.ubbcluj.ro
+servers:
+  - url: 'https://versioningservice.azurewebsites.net'
+paths:
+  '/assets/{assetId}/versions':
+    $ref: 'paths\assets@{assetId}@versions.yaml'
+  '/assets/{assetId}/versions/{name}':
+    $ref: 'paths\assets@{assetId}@versions@{name}.yaml'
+components:
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <token>
+      description: >-
+        Authentication is made by the JWT token sent in the Authorization header
+        of the request.
+    ApiKey:
+      name: Authorization
+      type: apiKey
+      in: header
+      description: >-
+        Authentication is made by the API key sent in the Authorization header
+        of the request, in the following format: `Bearer <api_key>`.
+tags:
+  - name: Version
+    x-displayName: Version Management
+security:
+  - JWT: []
+  - ApiKey: []

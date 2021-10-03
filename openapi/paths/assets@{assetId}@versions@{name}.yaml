@@ -1,0 +1,65 @@
+parameters:
+  - schema:
+      type: string
+    name: assetId
+    in: path
+    required: true
+    description: The ID of the asset.
+  - schema:
+      type: string
+    name: name
+    in: path
+    required: true
+    description: The name of the asset version.
+get:
+  summary: Get a version of an asset
+  tags:
+    - Version
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ./definitions/VersionResponse.yaml
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ./definitions/ErrorResponse.yaml
+  operationId: getAssetVersion
+  description: >-
+    Returns the required version of the asset.
+
+
+    Requires access rights to the asset itself, to be able to retrieve the
+    version.
+
+
+    Possible response codes:
+
+    - `404`: The asset, or the asset version was not found.
+
+    - `200`: The version was returned in the HTTP body.
+  parameters: []
+delete:
+  summary: Delete an asset version
+  operationId: deleteAssetVersion
+  responses:
+    '204':
+      description: No Content
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: ./definitions/ErrorResponse.yaml
+  description: >-
+    Deletes the sepcified version of the asset.
+
+
+    Responds with `404` if the asset or the version is not found. Details about
+    the failure in the `message` field of the error response.
+  tags:
+    - Version

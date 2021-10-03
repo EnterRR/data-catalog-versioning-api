@@ -1,0 +1,25 @@
+title: ErrorResponse
+type: object
+description: ''
+properties:
+  timestamp:
+    type: string
+    format: date-time
+    description: The time of the error.
+  status:
+    type: integer
+    description: The status code of the response.
+    example: 200
+  error:
+    type: string
+    description: The status description of the response.
+    example: Bad Request
+  message:
+    type: object
+    description: 'An object containing the erros, with the field name as key, and the error cause as value.'
+  path:
+    type: string
+    example: /assets
+    description: The path at which the request was sent.
+required:
+  - status

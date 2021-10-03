@@ -1,0 +1,285 @@
+openapi: 3.0.0
+info:
+  title: Data Catalog Versioning Service API
+  version: '1.0'
+  description: >-
+    The asset versioning service of the Data Catalog application.
+
+
+    Provides API endpoints to create, delete and retrieve asset versions. The
+    access rights to an asset's version are the same as the right to the asset
+    itself.
+
+
+    The versions cannot be modified, only deleted.
+  contact:
+    name: Szilárd Tumó
+    email: szilardtumo@stud.ubbcluj.ro
+  license:
+    name: MIT
+    url: >-
+      https://raw.githubusercontent.com/data-catalog/datacatalog-versioning-api/master/LICENSE
+servers:
+  - url: 'https://versioningservice.azurewebsites.net'
+paths:
+  '/assets/{assetId}/versions':
+    parameters:
+      - schema:
+          type: string
+        name: assetId
+        in: path
+        required: true
+        description: The ID of the asset.
+    get:
+      summary: List the versions of an asset
+      tags:
+        - Version
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VersionResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      operationId: getAssetVersions
+      description: >-
+        Lists all the available versions of the asset.
+
+
+        Requires access rights to the asset itself, to be able to retrieve the
+        version.
+
+
+        Possible response codes:
+
+        - `404`: The asset was not found.
+
+        - `200`: The version was returned in the HTTP body.
+    post:
+      summary: Create an asset version
+      operationId: createAssetVersion
+      responses:
+        '201':
+          description: Created
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      description: >-
+        Creates a new version of the asset, with the current content of the
+        asset.
+
+        The version name must be unique for the asset.
+
+
+        Requires access rights to the asset itself, to be able to create a new
+        version.
+
+
+        Possible response codes:
+
+        - `404`: The asset was not found.
+
+        - `422`: The HTTP request body is invalid. Detailed explanation can be
+        found in the response body.
+
+        - `201`: The version was created successfully.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionRequest'
+      tags:
+        - Version
+  '/assets/{assetId}/versions/{name}':
+    parameters:
+      - schema:
+          type: string
+        name: assetId
+        in: path
+        required: true
+        description: The ID of the asset.
+      - schema:
+          type: string
+        name: name
+        in: path
+        required: true
+        description: The name of the asset version.
+    get:
+      summary: Get a version of an asset
+      tags:
+        - Version
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      operationId: getAssetVersion
+      description: >-
+        Returns the required version of the asset.
+
+
+        Requires access rights to the asset itself, to be able to retrieve the
+        version.
+
+
+        Possible response codes:
+
+        - `404`: The asset, or the asset version was not found.
+
+        - `200`: The version was returned in the HTTP body.
+      parameters: []
+    delete:
+      summary: Delete an asset version
+      operationId: deleteAssetVersion
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      description: >-
+        Deletes the sepcified version of the asset.
+
+
+        Responds with `404` if the asset or the version is not found. Details
+        about the failure in the `message` field of the error response.
+      tags:
+        - Version
+components:
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <token>
+      description: >-
+        Authentication is made by the JWT token sent in the Authorization header
+        of the request.
+    ApiKey:
+      name: Authorization
+      type: apiKey
+      in: header
+      description: >-
+        Authentication is made by the API key sent in the Authorization header
+        of the request, in the following format: `Bearer <api_key>`.
+  schemas:
+    ContentResponse:
+      title: ContentResponse
+      type: object
+      description: ''
+      x-examples:
+        Content Response Example:
+          name: users.csv
+          lastModified: '2020-12-02T12:51:33.000Z'
+          size: 176
+      properties:
+        name:
+          type: string
+          description: The name of the blob in the container.
+        lastModified:
+          type: string
+          format: date-time
+          description: The date when the blob was last modified.
+        size:
+          type: integer
+          description: The size of the blob in bytes.
+          example: 0
+          minimum: 0
+          format: int64
+      required:
+        - name
+        - lastModified
+    VersionResponse:
+      title: VersionResponse
+      type: object
+      description: ''
+      x-examples: {}
+      properties:
+        name:
+          type: string
+          description: The name of the version. Unique for an asset.
+        assetId:
+          type: string
+          description: The ID of the asset having this version.
+        contents:
+          type: array
+          description: The list of blobs which are present in this version.
+          items:
+            $ref: '#/components/schemas/ContentResponse'
+        createdAt:
+          type: string
+          description: The datetime when this version was created.
+          format: date-time
+      required:
+        - name
+        - assetId
+        - contents
+        - createdAt
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: ''
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: The time of the error.
+        status:
+          type: integer
+          description: The status code of the response.
+          example: 200
+        error:
+          type: string
+          description: The status description of the response.
+          example: Bad Request
+        message:
+          type: object
+          description: >-
+            An object containing the erros, with the field name as key, and the
+            error cause as value.
+        path:
+          type: string
+          example: /assets
+          description: The path at which the request was sent.
+      required:
+        - status
+    VersionRequest:
+      title: VersionRequest
+      type: object
+      description: ''
+      properties:
+        name:
+          type: string
+          description: The name of the version.
+      required:
+        - name
+tags:
+  - name: Version
+    x-displayName: Version Management
+    description: Manage asset versions.
+security:
+  - JWT: []
+  - ApiKey: []

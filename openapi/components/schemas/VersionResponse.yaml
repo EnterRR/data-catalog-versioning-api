@@ -1,0 +1,25 @@
+title: VersionResponse
+type: object
+description: ''
+x-examples: {}
+properties:
+  name:
+    type: string
+    description: The name of the version. Unique for an asset.
+  assetId:
+    type: string
+    description: The ID of the asset having this version.
+  contents:
+    type: array
+    description: The list of blobs which are present in this version.
+    items:
+      $ref: ./ContentResponse.yaml
+  createdAt:
+    type: string
+    description: The datetime when this version was created.
+    format: date-time
+required:
+  - name
+  - assetId
+  - contents
+  - createdAt

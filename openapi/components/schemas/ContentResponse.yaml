@@ -1,0 +1,25 @@
+title: ContentResponse
+type: object
+description: ''
+x-examples:
+  Content Response Example:
+    name: users.csv
+    lastModified: '2020-12-02T12:51:33.000Z'
+    size: 176
+properties:
+  name:
+    type: string
+    description: The name of the blob in the container.
+  lastModified:
+    type: string
+    format: date-time
+    description: The date when the blob was last modified.
+  size:
+    type: integer
+    description: The size of the blob in bytes.
+    example: 0
+    minimum: 0
+    format: int64
+required:
+  - name
+  - lastModified

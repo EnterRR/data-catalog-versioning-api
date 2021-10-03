@@ -1,0 +1,6 @@
+type: http
+scheme: bearer
+bearerFormat: Bearer <token>
+description: >-
+  Authentication is made by the JWT token sent in the Authorization header of
+  the request.

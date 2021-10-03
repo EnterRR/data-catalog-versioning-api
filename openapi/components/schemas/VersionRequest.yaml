@@ -1,1 +1,9 @@
-$ref: ./definitions/VersionRequest.yaml
+title: VersionRequest
+type: object
+description: ''
+properties:
+  name:
+    type: string
+    description: The name of the version.
+required:
+  - name

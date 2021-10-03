@@ -6,6 +6,7 @@ lint:
     - recommended
   rules:
     no-unused-components: warning
+    no-ambiguous-paths: off
 referenceDocs:
   htmlTemplate: ./docs/index.html
   theme:

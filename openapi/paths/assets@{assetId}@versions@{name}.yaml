@@ -16,18 +16,18 @@ get:
   tags:
     - Version
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
-            $ref: ./definitions/VersionResponse.yaml
-    '404':
+            $ref: ../components/schemas/VersionResponse.yaml
+    "404":
       description: Not Found
       content:
         application/json:
           schema:
-            $ref: ./definitions/ErrorResponse.yaml
+            $ref: ../components/schemas/ErrorResponse.yaml
   operationId: getAssetVersion
   description: >-
     Returns the required version of the asset.
@@ -47,14 +47,14 @@ delete:
   summary: Delete an asset version
   operationId: deleteAssetVersion
   responses:
-    '204':
+    "204":
       description: No Content
-    '404':
+    "404":
       description: Not Found
       content:
         application/json:
           schema:
-            $ref: ./definitions/ErrorResponse.yaml
+            $ref: ../components/schemas/ErrorResponse.yaml
   description: >-
     Deletes the sepcified version of the asset.
 

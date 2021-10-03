@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Data Catalog Versioning Service API
-  version: '1.0'
+  version: "1.0"
   description: >-
     The asset versioning service of the Data Catalog application.
 
@@ -15,12 +15,15 @@ info:
   contact:
     name: Szilárd Tumó
     email: szilardtumo@stud.ubbcluj.ro
+  license:
+    name: MIT
+    url: https://raw.githubusercontent.com/data-catalog/datacatalog-versioning-api/master/LICENSE
 servers:
-  - url: 'https://versioningservice.azurewebsites.net'
+  - url: "https://versioningservice.azurewebsites.net"
 paths:
-  '/assets/{assetId}/versions':
+  "/assets/{assetId}/versions":
     $ref: 'paths\assets@{assetId}@versions.yaml'
-  '/assets/{assetId}/versions/{name}':
+  "/assets/{assetId}/versions/{name}":
     $ref: 'paths\assets@{assetId}@versions@{name}.yaml'
 components:
   securitySchemes:
@@ -41,6 +44,7 @@ components:
 tags:
   - name: Version
     x-displayName: Version Management
+    description: Manage asset versions.
 security:
   - JWT: []
   - ApiKey: []

@@ -10,20 +10,20 @@ get:
   tags:
     - Version
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
             type: array
             items:
-              $ref: ./definitions/VersionResponse.yaml
-    '404':
+              $ref: ../components/schemas/VersionResponse.yaml
+    "404":
       description: Not Found
       content:
         application/json:
           schema:
-            $ref: ./definitions/ErrorResponse.yaml
+            $ref: ../components/schemas/ErrorResponse.yaml
   operationId: getAssetVersions
   description: >-
     Lists all the available versions of the asset.
@@ -42,16 +42,16 @@ post:
   summary: Create an asset version
   operationId: createAssetVersion
   responses:
-    '201':
+    "201":
       description: Created
-    '404':
+    "404":
       description: Not Found
-    '422':
+    "422":
       description: Unprocessable Entity (WebDAV)
       content:
         application/json:
           schema:
-            $ref: ./definitions/ErrorResponse.yaml
+            $ref: ../components/schemas/ErrorResponse.yaml
   description: >-
     Creates a new version of the asset, with the current content of the asset.
 
@@ -74,6 +74,6 @@ post:
     content:
       application/json:
         schema:
-          $ref: ./definitions/VersionRequest.yaml
+          $ref: ../components/schemas/VersionRequest.yaml
   tags:
     - Version
